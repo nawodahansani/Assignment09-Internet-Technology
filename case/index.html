@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            background-color: black;
+            margin-top: calc(100vh/3);
+        }
+        section>h1{
+            color: #d73758;
+            display: flex;
+            justify-content: center;
+        }
+        section>section:nth-child(3)>div{
+            position: relative;
+            width: 100px;
+            height: 50px;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+        section>section:nth-child(3){
+            display: flex;
+            column-gap: 10px;
+            margin: 20px;
+        }
+        section>section:nth-child(5)>button{
+            width: 250px;
+            height: 40px;
+            border-radius: 10px;
+            margin: 20px;
+            color: white;
+        }
+        section>section:nth-child(5){
+            display: flex;
+            justify-content: center;
+        }
+        #start{
+            background-color: lightcoral;
+        }
+        #stop{
+            background-color: #a24242;
+        }
+        #line1{
+            width: 700px;
+            height: 1px;
+            background-color: white;
+        }
+        #line2{
+            width:700px;
+            height: 1px;
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+<section id="kit">
+    <h1>JavaScript Knight Rider</h1>
+    <div id="line1"></div>
+    <section id="light-panel">
+        <div class="light" ></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </section>
+    <div id="line2"></div>
+    <section id="button-panel">
+        <button id="start">START</button>
+        <button id="stop">STOP</button>
+    </section>
+</section>
+
+<script src="../lib/jquery-3.7.1.min.js"></script>
+<script>
+    const light_count = 6;
+    let current_light = -1;
+    let direction = "RIGHT";    //RIGHT or LEFT
+    let intervalId = null;
+
+    updateLight = () => {
+        if (direction==="RIGHT"){
+            current_light++;
+            $(".light").css("background", "black");
+            $(".light").eq(current_light).css("background", "crimson");
+            $(".light").eq(current_light-1).css("background", "lightcoral");
+            $(".light").eq(current_light-2).css("background", "lightpink");
+
+
+            if(current_light == light_count-1){
+                direction = "LEFT";
+            }
+        }else {
+            current_light--;
+            $(".light").css("background", "black");
+            $(".light").eq(current_light).css("background", "crimson");
+            $(".light").eq(current_light+1).css("background", "lightcoral");
+            $(".light").eq(current_light+2).css("background", "lightpink");
+
+            if (current_light == 0){
+                direction = "RIGHT";
+            }
+        }
+
+    }
+
+    $('#start').on('click', function (){
+        intervalId = setInterval(updateLight,100);
+    });
+
+    $('#stop').on('click', function (){
+        clearInterval(intervalId);
+    });
+</script>
+</body>
+</html>
