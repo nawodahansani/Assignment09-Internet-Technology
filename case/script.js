@@ -3,6 +3,8 @@ let current_light = -1;
 let direction = "RIGHT";
 let intervalId = null;
 
+const audio = document.getElementById("background-audio");
+
 updateLight = () => {
     if (direction==="RIGHT"){
         current_light++;
@@ -29,10 +31,16 @@ updateLight = () => {
 
 }
 
-$('#start').on('click', function (){
-    intervalId = setInterval(updateLight,100);
+$('#start').on('click', function () {
+    if (!intervalId) {
+        intervalId = setInterval(updateLight, 100);
+        audio.play();
+    }
 });
 
-$('#stop').on('click', function (){
+$('#stop').on('click', function () {
     clearInterval(intervalId);
+    intervalId = null;
+    audio.pause();
+    audio.currentTime = 0;
 });
